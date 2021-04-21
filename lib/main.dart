@@ -1,6 +1,12 @@
+import 'package:boletin/network_data_source.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  final networkDataSource = NetworkDataSource();
+  final list = await networkDataSource.getAllArticles();
+  list.forEach((element) {
+    print(element.toString());
+  });
   runApp(MyApp());
 }
 

@@ -1,4 +1,4 @@
-import 'package:boletin/article_preview.dart';
+import 'package:boletin/model/article_preview.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
