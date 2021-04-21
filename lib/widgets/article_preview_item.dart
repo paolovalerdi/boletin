@@ -16,7 +16,8 @@ class ArticlePreviewItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildImage(),
-            _buildContent(),
+            SizedBox(width: 16),
+            _buildContent(Theme.of(context).textTheme),
           ],
         ),
       ),
@@ -25,23 +26,34 @@ class ArticlePreviewItem extends StatelessWidget {
 
   Widget buildImage() {
     return SizedBox(
-      width: 100,
-      height: 100,
-      child: CachedNetworkImage(
-        imageUrl: _preview.thumbnailUrl,
-        fit: BoxFit.cover,
+      width: 120,
+      height: 120,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: CachedNetworkImage(
+          imageUrl: _preview.thumbnailUrl,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(TextTheme textTheme) {
     return Expanded(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(_preview.title),
-          Text(_preview.summary),
-          Text(_preview.category),
-          Text(_preview.date),
+          Text(_preview.title, style: textTheme.headline6),
+          SizedBox(height: 8),
+          Text(
+            _preview.summary,
+            style: textTheme.bodyText1,
+          ),
+          SizedBox(height: 24),
+          Text(
+            "${_preview.date} • ${_preview.category}",
+            style: textTheme.caption,
+          ),
         ],
       ),
     );
