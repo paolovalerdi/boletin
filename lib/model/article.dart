@@ -14,4 +14,9 @@ class Article {
     this.category,
     this.images,
   );
+
+  @override
+  String toString() {
+    return "{\n\turl: $url,\n\ttitle: $title,\n\tbody: $body,\n\tdate: $date,\n\tcategory: $category,\n\timages: $images}";
+  }
 }
