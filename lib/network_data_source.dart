@@ -1,3 +1,4 @@
+import 'package:boletin/model/article.dart';
 import 'package:boletin/model/article_preview.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
@@ -24,6 +25,37 @@ class NetworkDataSource {
         element.querySelector("a img").attributes["src"],
       );
     }).toList();
+  }
+
+  Future<Article> getFullArticle(String url) async {
+    final response = await http.get(_buildUrl(url));
+    final document = parse(response.body);
+    final bodyText = document
+        .querySelectorAll("div.field-item p")
+        .map((e) {
+          return e.text.trimLeft().trimRight();
+        })
+        .where((e) => e.length > 0)
+        .join("\n");
+    final imagesUrls = document.querySelectorAll("img.img-responsive").map((e) {
+      return e.attributes["src"].replaceAll(
+        "styles/thumbnails_noticias/public/",
+        "",
+      );
+    }).toList();
+    if (imagesUrls.length > 1) {
+      // Removes the duplicated image when there's a carousel.
+      imagesUrls.removeAt(0);
+    }
+    return Article(
+      url,
+      document.querySelector(".page-header").innerHtml,
+      bodyText,
+      document.querySelector("span.date-display-single").innerHtml,
+      document.querySelector('a[typeof="skos:Concept"]').innerHtml ??
+          "Universidad",
+      imagesUrls,
+    );
   }
 
   Uri _buildUrl(String endpoint) {
