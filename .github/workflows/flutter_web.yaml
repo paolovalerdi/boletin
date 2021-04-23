@@ -22,7 +22,7 @@ jobs:
         run: flutter build web
 
       - name: Deploy
-        uses: peaceiris/action-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.token }}
           publish_dir: ./build/web
