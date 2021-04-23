@@ -41,6 +41,7 @@ class ArticlePreviewItem extends StatelessWidget {
   Widget _buildContent(TextTheme textTheme) {
     return Expanded(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(_preview.title, style: textTheme.headline6),
