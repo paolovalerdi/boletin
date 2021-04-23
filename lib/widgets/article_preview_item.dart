@@ -1,4 +1,5 @@
 import 'package:boletin/model/article_preview.dart';
+import 'package:boletin/widgets/article_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -9,18 +10,25 @@ class ArticlePreviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildImage(),
-            SizedBox(width: 16),
-            _buildContent(Theme.of(context).textTheme),
-          ],
+    return InkWell(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildImage(),
+              SizedBox(width: 16),
+              _buildContent(Theme.of(context).textTheme),
+            ],
+          ),
         ),
       ),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return ArticleScreen(url: _preview.url);
+        }));
+      },
     );
   }
 
